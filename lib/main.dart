@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/app/functions.dart';
-import 'package:weather_app/bloc_observer.dart';
-import 'package:weather_app/data/data_source/remote/remote_data_source.dart';
-import 'package:weather_app/persentation/bloc/weather_bloc.dart';
-import 'package:weather_app/data/repository/weather_repository.dart';
-import 'package:weather_app/persentation/views/home_view.dart';
+import 'app/functions.dart';
+import 'bloc_observer.dart';
+import 'data/data_source/remote/remote_data_source.dart';
+import 'persentation/bloc/weather_bloc.dart';
+import 'data/repository/weather_repository.dart';
+import 'persentation/views/home_view.dart';
 
 void main(List<String> args) {
   Bloc.observer = MyBlocObserver();

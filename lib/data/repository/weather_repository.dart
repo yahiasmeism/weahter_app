@@ -1,4 +1,4 @@
-import 'package:weather_app/data/data_source/remote/remote_data_source.dart';
+import '../data_source/remote/remote_data_source.dart';
 
 import '../models/weather_model.dart';
 

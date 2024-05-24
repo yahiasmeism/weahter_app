@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:weather_app/data/models/weather_model.dart';
+import '../data/models/weather_model.dart';
 
 MaterialColor weatherColor(WeatherModel? weather) {
   switch (weather?.conditionWeather) {

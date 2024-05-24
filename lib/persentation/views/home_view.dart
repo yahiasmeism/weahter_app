@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/persentation/bloc/weather_bloc.dart';
-import 'package:weather_app/persentation/views/search_view.dart';
-import 'package:weather_app/persentation/widgets/no_weather_body.dart';
-import 'package:weather_app/persentation/widgets/weather_body.dart';
+import '../bloc/weather_bloc.dart';
+import 'search_view.dart';
+import '../widgets/no_weather_body.dart';
+import '../widgets/weather_body.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});

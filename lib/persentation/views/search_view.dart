@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/persentation/bloc/weather_bloc.dart';
+import '../bloc/weather_bloc.dart';
 
 class SearchView extends StatelessWidget {
   const SearchView({super.key});

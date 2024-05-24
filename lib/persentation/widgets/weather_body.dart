@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:weather_app/app/functions.dart';
-import 'package:weather_app/data/models/weather_model.dart';
+import '../../app/functions.dart';
+import '../../data/models/weather_model.dart';
 import 'package:progress_indicators/progress_indicators.dart' as prog;
 
 class WeatherBody extends StatelessWidget {
