@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/cubits/get_weather_cubit/get_weather_cubit.dart';
-import 'package:weather_app/cubits/get_weather_cubit/get_weather_states.dart';
-import 'package:weather_app/views/home_view.dart';
+import 'package:weather_app/app/functions.dart';
+import 'package:weather_app/bloc_observer.dart';
+import 'package:weather_app/data/data_source/remote/remote_data_source.dart';
+import 'package:weather_app/persentation/bloc/weather_bloc.dart';
+import 'package:weather_app/data/repository/weather_repository.dart';
+import 'package:weather_app/persentation/views/home_view.dart';
 
 void main(List<String> args) {
+  Bloc.observer = MyBlocObserver();
   runApp(const WeatherApp());
 }
 
@@ -14,17 +18,16 @@ class WeatherApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GetWeatherCubit(),
+      create: (context) => WeatherBloc(
+          weatherRepository: WeatherRepository(remote: RemoteDataSource())),
       child: Builder(builder: (context) {
-        return BlocBuilder<GetWeatherCubit, WeatherState>(
+        return BlocBuilder<WeatherBloc, WeatherState>(
           builder: (context, state) {
             return MaterialApp(
               theme: ThemeData(
                 useMaterial3: false,
-                colorSchemeSeed: getWeatherColor(
-                    BlocProvider.of<GetWeatherCubit>(context)
-                        .weatherModel
-                        ?.conditionWeather),
+                colorSchemeSeed:
+                    state is LoadedWeather ? weatherColor(state.weather) : null,
               ),
               debugShowCheckedModeBanner: false,
               home: const HomeView(),
@@ -33,59 +36,5 @@ class WeatherApp extends StatelessWidget {
         );
       }),
     );
-  }
-}
-
-MaterialColor getWeatherColor(String? weather) {
-  switch (weather) {
-    case "Sunny":
-      return Colors.amber;
-    case "Cloudy":
-    case "Overcast":
-      return Colors.grey;
-    case "Mist":
-    case "Fog":
-      return Colors.blueGrey;
-    case "Partly cloudy":
-    case "Patchy rain possible":
-    case "Patchy light drizzle":
-    case "Light drizzle":
-    case "Freezing drizzle":
-    case "Light freezing drizzle":
-    case "Heavy freezing drizzle":
-    case "Patchy light rain":
-    case "Light rain":
-    case "Moderate rain at times":
-    case "Moderate rain":
-    case "Patchy light snow":
-    case "Light snow":
-    case "Patchy moderate snow":
-    case "Moderate snow":
-    case "Light sleet showers":
-    case "Moderate or heavy sleet showers":
-      return Colors.lightBlue;
-    case "Heavy rain at times":
-    case "Heavy rain":
-      return Colors.teal;
-    case "Patchy heavy snow":
-    case "Heavy snow":
-    case "Blowing snow":
-    case "Blizzard":
-      return Colors.blueGrey;
-    case "Light rain shower":
-    case "Moderate or heavy rain shower":
-    case "Torrential rain shower":
-    case "Light snow showers":
-    case "Moderate or heavy snow showers":
-    case "Light showers of ice pellets":
-    case "Moderate or heavy showers of ice pellets":
-    case "Patchy light snow with thunder":
-    case "Moderate or heavy snow with thunder":
-      return Colors.lightBlue;
-    case "Patchy light rain with thunder":
-    case "Moderate or heavy rain with thunder":
-      return Colors.teal;
-    default:
-      return Colors.grey;
   }
 }

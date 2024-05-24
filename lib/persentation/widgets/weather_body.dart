@@ -1,18 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/cubits/get_weather_cubit/get_weather_cubit.dart';
-import 'package:weather_app/main.dart';
-import 'package:weather_app/models/weather_model.dart';
+import 'package:weather_app/app/functions.dart';
+import 'package:weather_app/data/models/weather_model.dart';
 import 'package:progress_indicators/progress_indicators.dart' as prog;
 
 class WeatherBody extends StatelessWidget {
-  const WeatherBody({super.key});
-
+  const WeatherBody({super.key, required this.weather});
+  final WeatherModel weather;
   @override
   Widget build(BuildContext context) {
-    WeatherModel weatherModel =
-        BlocProvider.of<GetWeatherCubit>(context).weatherModel!;
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -20,9 +16,9 @@ class WeatherBody extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            getWeatherColor(weatherModel.conditionWeather),
-            getWeatherColor(weatherModel.conditionWeather)[300]!,
-            getWeatherColor(weatherModel.conditionWeather)[50]!,
+            weatherColor(weather)[300]!,
+            weatherColor(weather),
+            weatherColor(weather)[50]!,
           ],
         ),
       ),
@@ -30,11 +26,11 @@ class WeatherBody extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            weatherModel.cityName,
+            weather.cityName,
             style: const TextStyle(fontSize: 38, fontWeight: FontWeight.w600),
           ),
           Text(
-            'updated at : ${weatherModel.date.hour}:${weatherModel.date.month}',
+            'updated at : ${weather.date.hour}:${weather.date.month}',
             style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 25),
@@ -49,12 +45,12 @@ class WeatherBody extends StatelessWidget {
                     placeholder: (context, url) {
                       return Center(child: prog.JumpingDotsProgressIndicator());
                     },
-                    imageUrl: weatherModel.image.contains('http')
-                        ? weatherModel.image
-                        : "https:${weatherModel.image}"),
+                    imageUrl: weather.image.contains('http')
+                        ? weather.image
+                        : "https:${weather.image}"),
               ),
               Text(
-                weatherModel.temp.round().toString(),
+                weather.temp.round().toString(),
                 style: const TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.w600,
@@ -63,11 +59,11 @@ class WeatherBody extends StatelessWidget {
               Column(
                 children: [
                   Text(
-                    'maxTemp: ${weatherModel.maxTemp.round()}',
+                    'maxTemp: ${weather.maxTemp.round()}',
                     style: const TextStyle(fontSize: 16),
                   ),
                   Text(
-                    'minTemp: ${weatherModel.minTemp.round()}',
+                    'minTemp: ${weather.minTemp.round()}',
                     style: const TextStyle(fontSize: 16),
                   ),
                 ],
@@ -76,7 +72,7 @@ class WeatherBody extends StatelessWidget {
           ),
           const SizedBox(height: 30),
           Text(
-            weatherModel.conditionWeather,
+            weather.conditionWeather,
             style: const TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.w600,

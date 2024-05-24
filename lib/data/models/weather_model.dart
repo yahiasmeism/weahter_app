@@ -16,7 +16,7 @@ class WeatherModel {
       required this.maxTemp,
       required this.temp});
 
-  factory WeatherModel.fromJson(json) {
+  factory WeatherModel.fromJson(Map<String,dynamic> json) {
     return WeatherModel(
       cityName: json['location']['name'],
       date: DateTime.parse(json['current']['last_updated']),
